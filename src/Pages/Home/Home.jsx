@@ -50,7 +50,7 @@ const Home = () => {
 
         <div className="content">
 
-          <h2>Heyy There!, <br /> I'm <span>Takshil</span></h2>
+          <h2>Heyy There!, <br /> I'm <span>Takshil Thummar</span></h2>
           <h2>I am a <span>{text}</span><span className="cursor">|</span></h2>
 
           <p>My name is Takshil Thummar and and I'm from Junagadh.</p>
