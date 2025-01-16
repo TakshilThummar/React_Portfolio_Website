@@ -1,11 +1,30 @@
-# Use an official Nginx image
+# Build Stage
+FROM node:18-alpine AS build
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the Vite project (output will be in the "dist" folder)
+RUN npm run build
+
+# Debugging: List the contents of the "dist" directory
+RUN ls -l /app/dist
+
+# Production Stage
 FROM nginx:alpine
 
-# Copy the build folder to Nginx's default HTML directory
-COPY build /usr/share/nginx/html
+# Copy the built files from the "dist" folder to Nginx HTML folder
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
 
-# Start Nginx
+# Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
